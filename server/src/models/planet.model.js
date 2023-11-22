@@ -34,7 +34,7 @@ function loadPlanets() {
       })
       .on("end", async () => {
         //const names = result.map((plant) => plant["kepler_name"]);
-        const planetCount = (await planetsModel()).length;
+        //const planetCount = (await planetsModel()).length;
         resolve();
       });
   });
