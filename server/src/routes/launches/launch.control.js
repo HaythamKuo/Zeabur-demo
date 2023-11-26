@@ -5,8 +5,14 @@ const {
   abandonLaunch,
 } = require("../../models/launches.model");
 
+const { getPagination } = require("../../services/query");
+
 async function getLaunchData(req, res) {
-  return res.status(200).json(await launchModel());
+  const { skip, limit } = getPagination(req.query);
+
+  const launches = await launchModel(skip, limit);
+
+  return res.status(200).json(launches);
 }
 
 async function postLaunchData(req, res) {

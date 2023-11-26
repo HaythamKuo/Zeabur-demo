@@ -40,7 +40,7 @@ async function populateLaunches() {
   });
 
   if (res.status !== 200) {
-    console.log("🥹問題下載發射資料");
+    console.log("問題下載發射資料🥹");
     throw new ErrorEvent("發射失敗");
   }
 
@@ -152,7 +152,19 @@ async function addNewlaunch(launch) {
 //isId existing?
 
 //回傳無多餘格式的資料
-const launchModel = async () => await launchesDb.find({}, { _id: 0, __v: 0 });
+
+/**
+ *
+ * @returns 該資料庫所有資料
+ * 其中skip() 是指告訴數據庫跳過前 20 條記錄這是一個分頁操作
+ * limit() 告訴數據庫只返回最多 50 條記錄
+ */
+const launchModel = async (skip, limit) =>
+  await launchesDb
+    .find({}, { _id: 0, __v: 0 })
+    .sort({ flightNumber: 1 })
+    .skip(skip)
+    .limit(limit);
 
 //abndonData
 async function abandonLaunch(id) {
